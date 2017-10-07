@@ -1,0 +1,113 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, hr, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, dialog, figure, footer, header, hgroup, menu, nav, section, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  list-style: none;
+  background-color: transparent;
+}
+
+body {
+  font-family: "Helvetica Neue", Arial;
+}
+
+h1 {
+  font-family: "Arial Rounded MT Bold";
+  font-size: 40px;
+  font-weight: normal;
+  letter-spacing: -1px;
+  line-height: 48px;
+  text-align: center;
+}
+
+h2 {
+  font-family: "Arial Rounded MT Bold";
+  font-size: 24px;
+  font-weight: normal;
+  letter-spacing: -1px;
+  line-height: 36px;
+}
+
+h4 {
+  display: block;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 24px;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.content
+{
+    background: #fff;
+    width: 420px;
+    height: 100%;
+    margin: auto;
+}
+
+@media (max-width: 400px) {
+  .content{
+    width: 100%;
+  }
+}
+
+#game-container
+{
+    border-top: solid 1px #ccc;
+    border-bottom: solid 1px #ccc;
+    overflow: hidden;
+}
+
+#score-bar
+{
+    min-height: 80px;
+    position: relative;
+    margin: 20px 0 10px;
+    padding-right: 10px;
+}
+
+.score-box{
+  min-width: 80px;
+  padding: 5px 15px;
+  border-radius: 5px;
+  background-color: #324D5C;
+  float: right;
+  margin-left: 10px;
+}
+
+.score-box .label{
+  text-transform: uppercase;
+  font-size: 0.9em;
+  text-align: center;
+  font-weight: bold;
+  color: #ddd;
+}
+
+.score-box .score-value{
+  font-size: 1.8em;
+  font-weight: bold;
+  color: orange;
+  text-align: center;
+}
+
+.clear::after{
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.canvas-wrapper{
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #324D5C;
+  overflow: hidden;
+  margin: 0;
+}

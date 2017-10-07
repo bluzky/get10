@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Get10</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/game.css" />
+    <script type="text/javascript" src="engine/lib/gl-matrix.js"></script>
+    <script type="text/javascript" src="engine/core/core.js"></script>
+    <script type="text/javascript" src="engine/core/scene.js"></script>
+    <script type="text/javascript" src="engine/core/input.js"></script>
+    <script type="text/javascript" src="engine/loop.js"></script>
+    <script type="text/javascript" src="engine/core/transform.js"></script>
+    <script type="text/javascript" src="engine/core/renderable.js"></script>
+    <script type="text/javascript" src="engine/core/game_object.js"></script>
+    <script type="text/javascript" src="engine/resource/resource_manager.js"></script>
+    <script type="text/javascript" src="engine/resource/audio.js"></script>
+    <script type="text/javascript" src="js/vendor/state-machine.js"></script>
+    <script type="text/javascript" src="js/animation.js"></script>
+    <script type="text/javascript" src="js/grid.js"></script>
+    <script type="text/javascript" src="js/cell.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+    <script type="text/javascript" src="js/get10.js"></script>
+    <!-- <script type="text/javascript" src="js/connect.js"></script> -->
+  </head>
+  <body>
+    <div class="section white">
+      <div class="content">
+        <div id="score-bar" class="clear">
+            <div class="score-box">
+              <div class="label">Top</div>
+              <div class="score-value" id="top-score" style="color: #46B29D;">4900</div>
+            </div>
+            <div class="score-box">
+              <div class="label">Score</div>
+              <div class="score-value" id="score">0</div>
+            </div>
+        </div>
+        <div style="padding: 0 10px 10px; text-align: center; color: #aaa; font-weight: bold;">
+          Kết hợp các số giống nhau để tạo nên số lớn hơn.
+        </div>
+        <div class="canvas-wrapper" id="canvas-wrapper">
+          <canvas id="canvas" style="position: relative; transform-origin: top left;" width="400" height="400"></canvas>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <div class="m-game-wrap" id="start-screen">
+      <!-- Start -->
+       <div class="m-game-centered">
+        <div class="m-game-cover-banner">
+          <div class="m-game-cover-banner__2048">
+            <h1 class="m-game-cover-banner__2048__title">Get 10</h1>
+          </div>
+        </div>
+        <div class="m-game-group-btn">
+          <div class="m-game-group-btn__row">
+            <a class="m-game-group-btn__play m-game-btn m-game-group-btn--red js-btn-play">
+              <i class="fa fa-play"></i>
+              Play
+            </a>
+          </div>
+          <div class="m-game-group-btn__row">
+            <a class="m-game-group-btn__play m-game-btn m-game-group-btn--sea js-btn-help">
+              <i class="fa fa-question-circle-o"></i>
+              Help
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-game-wrap" style="display: none;" id="help-screen">
+      <!-- Start -->
+      <h4>Instruction</h4>
+       <div class="help-text">
+         <p>Kết hợp 2 hoặc nhiều ô kế nhau có số giống nhau để tạo nên ô có số lớn hơn.</p>
+         <p>Bạn giành chiến thắng khi tạo ra được 1 ô có số 10.</p>
+         <p>Bạn thua khi không có 2 ô nào giống nhau nằm kế nhau.</p>
+       </div>
+
+       <div class="help-btn-bar">
+           <a class="alone-btn m-game-group-btn--sea  js-btn-ok">
+             <i class="fa fa-times"></i>
+             Close
+           </a>
+       </div>
+    </div>
+
+    <div class="m-game-wrap" style="display: none;" id="win-screen">
+      <!-- Cup & Game Over -->
+      <div class="m-game-centered" >
+        <div class="js-win">
+          <div class="m-game-cover-banner">
+            <img class="m-game-cover-banner__cup" src="/assets/images/games/cup.png">
+          </div>
+          <h4 class="m-game__step-title">You win</h4>
+        </div>
+        <div class="js-loose">
+          <div class="m-game-cover-banner">
+            <img class="m-game-cover-banner__go" src="/assets/images/games/gameover.png">
+          </div>
+          <h4 class="m-game__step-title">Your score</h4>
+        </div>
+        <h1 class="m-game__score js-score">99.999.999</h1>
+        <div class="m-game-group-btn">
+          <div class="m-game-group-btn__row">
+            <a class="m-game-group-btn__play m-game-btn m-game-group-btn--green  js-btn-share">
+              <i class="fa fa-share-alt"></i>
+              Share
+            </a>
+          </div>
+          <div class="m-game-group-btn__row">
+            <a class="m-game-group-btn__play m-game-btn m-game-group-btn--red  js-btn-replay">
+              <i class="fa fa-repeat"></i>
+              Retry
+            </a>
+          </div>
+          <div class="m-game-group-btn__row">
+            <a class="m-game-group-btn__rank m-game-btn m-game-group-btn--sea  js-btn-quit" >
+              <i class="fa fa-sign-out"></i>
+              Quit
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <script>
+      var manager;
+      document.addEventListener('DOMContentLoaded', function() {
+        manager = new Get10.Manager();
+      }, false);
+    </script>
+  </body>
+</html>
