@@ -1,12 +1,12 @@
 var Get10 = Get10 || {};
-Get10.SelectedMask = (function(Get10, E){
+Get10.SelectedMask = (function(Get10){
   var SelectedMask = function(w, h){
     this.width = w;
     this.height = h;
   };
 
   SelectedMask.prototype.draw = function(){
-    var ctx = E.Core.getContext();
+    var ctx = Chek.Core.getContext();
 
     var center = {
       x:  this.width/2,
@@ -42,10 +42,10 @@ Get10.SelectedMask = (function(Get10, E){
   };
 
   return SelectedMask;
-})(Get10, E);
+})(Get10);
 
 
-Get10.NumberMask = (function(Get10, E){
+Get10.NumberMask = (function(Get10){
   var NumberMask = function(number, w, h){
     this.width = w;
     this.height = h;
@@ -57,7 +57,7 @@ Get10.NumberMask = (function(Get10, E){
   };
 
   NumberMask.prototype.draw = function(){
-    var ctx = E.Core.getContext();
+    var ctx = Chek.Core.getContext();
     ctx.fillStyle = "#fff";
     ctx.font = Get10.cfg.font;
     var text = ctx.measureText(''+ this.number); // TextMetrics object
@@ -70,11 +70,11 @@ Get10.NumberMask = (function(Get10, E){
   };
 
   return NumberMask;
-})(Get10, E);
+})(Get10);
 
-Get10.RoundedRectangle = (function(E){
+Get10.RoundedRectangle = (function(){
   var RoundedRectangleRender = function(x, y, w, h, r){
-    E.Renderable.call(this);
+    Chek.Renderable.call(this);
     this.width = w - 4;
     this.height = h - 4;
     this.radius = r || 5;
@@ -82,10 +82,10 @@ Get10.RoundedRectangle = (function(E){
     this.getXform().setAnchorPoint(w/2, h/2);
   };
 
-  E.inherit(RoundedRectangleRender, E.Renderable);
+  Chek.inherit(RoundedRectangleRender, Chek.Renderable);
 
   RoundedRectangleRender.prototype.draw = function(){
-    var ctx = E.Core.getContext();
+    var ctx = Chek.Core.getContext();
     var form = this.mXform.getXform();
     ctx.setTransform(form[0], form[3], form[1], form[4], form[2], form[5]);
     ctx.fillStyle = this.color || "#000";
@@ -109,9 +109,9 @@ Get10.RoundedRectangle = (function(E){
 
 
   return RoundedRectangleRender;
-})(E);
+})();
 
-Get10.Cell = (function(Get10, E){
+Get10.Cell = (function(Get10){
   var Cell = function(col, row, width, color){
     this.col = col;
     this.row = row;
@@ -125,15 +125,15 @@ Get10.Cell = (function(Get10, E){
 
     var renderableComponent = new Get10.RoundedRectangle(col * width, row * width, width, width, 5);
     renderableComponent.setColor(Get10.cfg.colors[this.number - 1]);
-    E.GameObject.call(this, renderableComponent);
+    Chek.GameObject.call(this, renderableComponent);
 
     var numberMask = new Get10.NumberMask(this.number, this.width, this.width);
     this.components.number = numberMask;
   };
 
-  E.inherit(Cell, E.GameObject);
+  Chek.inherit(Cell, Chek.GameObject);
 
-  E.extend(Cell, {
+  Chek.extend(Cell, {
     addToScene: function(scene){
       this.scene = scene;
       this.scene.addObject(this);
@@ -224,7 +224,7 @@ Get10.Cell = (function(Get10, E){
     },
 
     draw: function(){
-      var ctx = E.Core.getContext();
+      var ctx = Chek.Core.getContext();
       ctx.save();
       this.renderableComponent.draw();
       for(var name in this.components){
@@ -235,4 +235,4 @@ Get10.Cell = (function(Get10, E){
   });
 
   return Cell;
-})(Get10, E);
+})(Get10);

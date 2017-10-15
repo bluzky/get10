@@ -1,6 +1,6 @@
 var Get10 = Get10 || {};
 
-Get10.Animation = (function(Get10, E){
+Get10.Animation = (function(Get10){
   var ZoomOutAnimation = function(xForm, duration, callback){
     this.xForm = xForm;
     this.duration = duration;
@@ -12,7 +12,7 @@ Get10.Animation = (function(Get10, E){
     this.elapsedTime += dt;
     this.elapsedTime = Math.min(this.elapsedTime, this.duration);
 
-    var scale = E.EasingFunctions.easeInQuad(this.elapsedTime/this.duration);
+    var scale = Chek.EasingFunctions.easeInQuad(this.elapsedTime/this.duration);
     scale = (1 - scale);
     this.xForm.setSize(scale, scale);
 
@@ -37,7 +37,7 @@ Get10.Animation = (function(Get10, E){
     this.elapsedTime += dt;
     this.elapsedTime = Math.min(this.elapsedTime, this.duration);
 
-    var scale = E.EasingFunctions.easeInQuad(this.elapsedTime/this.duration);
+    var scale = Chek.EasingFunctions.easeInQuad(this.elapsedTime/this.duration);
     var xPos = this.fromX + scale * this.xDistance,
         yPos = this.fromY + scale * this.yDistance;
     this.xForm.setPosition(xPos, yPos);
@@ -52,4 +52,4 @@ Get10.Animation = (function(Get10, E){
     ZoomOutAnimation: ZoomOutAnimation,
     MoveAnimation: MoveAnimation
   };
-})(Get10, E);
+})(Get10);

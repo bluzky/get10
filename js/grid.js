@@ -1,6 +1,6 @@
 var Get10 = Get10 || {};
 
-Get10.LogicalGrid = (function(Get10, E){
+Get10.LogicalGrid = (function(Get10){
   var LogicalGrid = function(game) {
     this.game = game;
     this.cells = [];
@@ -11,7 +11,7 @@ Get10.LogicalGrid = (function(Get10, E){
     this.cellWidth = Get10.cfg.board.cellWidth;
   };
 
-  E.extend(LogicalGrid, {
+  Chek.extend(LogicalGrid, {
 
     initCells: function() {
       this.clear();
@@ -46,7 +46,7 @@ Get10.LogicalGrid = (function(Get10, E){
           this.clearAllSelectedCell();
           this.selectSameCellWith(cell);
         }
-        E.Audio.play("CLICK", 0.5);
+        Chek.Audio.play("CLICK", 0.5);
       }
     },
 
@@ -213,4 +213,4 @@ Get10.LogicalGrid = (function(Get10, E){
   });
 
   return LogicalGrid;
-})(Get10, E);
+})(Get10);

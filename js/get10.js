@@ -1,5 +1,5 @@
 var Get10 = Get10 || {};
-E.merge(Get10, {
+Chek.merge(Get10, {
   randomChoice: function(choices) {
     choices = choices || [];
     var idx = Math.floor((Math.random() * choices.length));
@@ -65,8 +65,8 @@ Get10.Manager = (function(Get10, E){
     StateMachine.create(Get10.cfg.state, this);
     this.initMenu();
     this.storage = this.initStorage();
-    E.Core.initContext("canvas");
-    E.Input.initialize(["Mouse", "Touch"], "canvas");
+    Chek.Core.initContext("canvas");
+    Chek.Input.initialize(["Mouse", "Touch"], "canvas");
     this.scene = new Get10.Game(this);
     this.addEvents();
   };
@@ -108,28 +108,28 @@ Get10.Manager = (function(Get10, E){
   Manager.prototype.onplay = function() {
     this.menuManager.hideAll();
     this.scene.reset();
-    E.GameLoop.start(this.scene);
+    Chek.GameLoop.start(this.scene);
     this.resize();
   };
 
   Manager.prototype.onloose = function() {
-    E.GameLoop.stop();
+    Chek.GameLoop.stop();
     this.saveHighScore();
     this.menuManager.get("endmenu").findFirst(".js-score").innerHTML = this.scene.score.score;
     this.menuManager.get("endmenu").findFirst(".js-loose").style.display = "block";
     this.menuManager.get("endmenu").findFirst(".js-win").style.display = "none";
     this.menuManager.show("endmenu");
-    E.Audio.play("END");
+    Chek.Audio.play("END");
   };
 
   Manager.prototype.onwin = function() {
-    E.GameLoop.stop();
+    Chek.GameLoop.stop();
     this.saveHighScore();
     this.menuManager.get("endmenu").findFirst(".js-score").innerHTML = this.scene.score.score;
     this.menuManager.get("endmenu").findFirst(".js-loose").style.display = "none";
     this.menuManager.get("endmenu").findFirst(".js-win").style.display = "block";
     this.menuManager.show("endmenu");
-    E.Audio.play("END");
+    Chek.Audio.play("END");
   };
 
   Manager.prototype.onquit = function() {
@@ -156,7 +156,7 @@ Get10.Manager = (function(Get10, E){
     // do something to share on fb
   };
 
-  E.extend(Manager, {
+  Chek.extend(Manager, {
     addEvents: function() {
       window.addEventListener("resize", this.onresize.bind(this));
       var game = this.scene;
@@ -170,7 +170,7 @@ Get10.Manager = (function(Get10, E){
 
       // if (game.onclick) {
       //   var self = this;
-      //   E.Core.getCanvas()
+      //   Chek.Core.getCanvas()
       //         .addEventListener('click', function(ev) {
       //           var mousePos = self.getMousePos(self.canvas, ev);
       //           game.onclick(mousePos);
@@ -179,7 +179,7 @@ Get10.Manager = (function(Get10, E){
     },
 
     getMousePos: function(canvas, e) {
-    var rect = E.Core.getCanvas().getBoundingClientRect();
+    var rect = Chek.Core.getCanvas().getBoundingClientRect();
       var pos = {x: 0, y: 0};
       if(e.offsetX) {
         pos.x = e.offsetX;
@@ -207,7 +207,7 @@ Get10.Manager = (function(Get10, E){
       if(window.innerWidth <= 420 || window.innerHeight<= 420){
         var vertexSize = Math.min(window.innerWidth, window.innerHeight) - 20;
         var ratio = vertexSize/400;
-        E.Core.getCanvas().style.transform = "scale("+ ratio + ")";
+        Chek.Core.getCanvas().style.transform = "scale("+ ratio + ")";
 
         var container = document.getElementById("canvas-wrapper");
         container.style.width = vertexSize+ "px";
@@ -217,18 +217,18 @@ Get10.Manager = (function(Get10, E){
   });
 
   return Manager;
-})(Get10, E);
+})(Get10);
 
 
-Get10.Game = (function(Get10, E) {
+Get10.Game = (function(Get10) {
 
   var Game = function(manager) {
     this.manager = manager;
-    E.Scene.call(this);
+    Chek.Scene.call(this);
   };
-  E.inherit(Game, E.Scene);
+  Chek.inherit(Game, Chek.Scene);
 
-  E.extend(Game, {
+  Chek.extend(Game, {
     initialize: function() {
       this.grid = new Get10.LogicalGrid(this);
       this.score = new Score(this);
@@ -240,13 +240,13 @@ Get10.Game = (function(Get10, E) {
     },
 
     reset: function(){
-      E.Audio.play("START");
+      Chek.Audio.play("START");
     },
 
     initResources: function() {
-      E.Audio.init();
+      Chek.Audio.init();
       for (var key in Get10.cfg.audio) {
-        E.Audio.load(key, Get10.cfg.audio[key]);
+        Chek.Audio.load(key, Get10.cfg.audio[key]);
       }
     },
 
@@ -261,7 +261,7 @@ Get10.Game = (function(Get10, E) {
 
     update: function(dt) {
       this.checkClick();
-      E.Scene.prototype.update.call(this, dt);
+      Chek.Scene.prototype.update.call(this, dt);
       if (!this.isAnimating() && this.grid.state == "cleaning") {
         this.grid.cleanAndRefill();
 
@@ -274,14 +274,14 @@ Get10.Game = (function(Get10, E) {
     },
 
     draw: function() {
-      E.Core.clearCanvas();
-      E.Scene.prototype.draw.call(this);
+      Chek.Core.clearCanvas();
+      Chek.Scene.prototype.draw.call(this);
     },
 
     checkClick: function() {
       if (this.state == "normal") {
-        if(E.Input.isClicked()){
-          this.grid.onclick(E.Input.getCursorPos());
+        if(Chek.Input.isClicked()){
+          this.grid.onclick(Chek.Input.getCursorPos());
         }
       }
     }
@@ -295,7 +295,7 @@ Get10.Game = (function(Get10, E) {
     this.topScoreContainer.innerHTML = this.game.manager.getTopScore() + "";
   };
 
-  E.extend(Score, {
+  Chek.extend(Score, {
     addScore: function(amount) {
       this.score += amount;
       this.container.innerHTML = this.score + '';
@@ -312,4 +312,4 @@ Get10.Game = (function(Get10, E) {
   });
 
   return Game;
-})(Get10, E);
+})(Get10);
